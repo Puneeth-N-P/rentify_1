@@ -130,6 +130,7 @@
                     <option value="Maharashtra">Maharashtra</option>
                     <option value="Kerala">Kerala</option>
                     <option value="Telangana">Telangana</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
                 </select>
             </div>
         </div>
@@ -213,7 +214,7 @@
 </section>
 
 
-<!-- ================= LOCATIONS ================= -->
+<!-- ================= LOCATIONS (2 Rows of 3 Cards) ================= -->
 <section class="locations-section" id="locations">
     <div class="section-heading">
         <div class="small-title">POPULAR LOCATIONS</div>
@@ -221,47 +222,65 @@
     </div>
 
     <div class="location-grid">
-        <div class="location-card" onclick="selectLocation('Karnataka')">
+        <!-- Top Row -->
+        <div class="location-card" onclick="selectLocation('Karnataka', 'Bangalore')">
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Bangalore">
             </div>
             <div class="location-info">
                 <h3>Bangalore</h3>
                 <p>Karnataka</p>
-                <span>Explore →</span>
             </div>
         </div>
 
-        <div class="location-card">
+        <div class="location-card" onclick="selectLocation('Telangana', 'Hyderabad')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/mysore.jpg') }}" alt="Mysore">
+                <img src="{{ url_for('static', filename='images/hyderabad.jpg') }}" alt="Hyderabad">
             </div>
             <div class="location-info">
-                <h3>Mysore</h3>
-                <p>Karnataka</p>
-                <span>Explore →</span>
+                <h3>Hyderabad</h3>
+                <p>Telangana</p>
             </div>
         </div>
 
-        <div class="location-card">
+        <div class="location-card" onclick="selectLocation('Tamil Nadu', 'Chennai')">
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/chennai.jpg') }}" alt="Chennai">
             </div>
             <div class="location-info">
                 <h3>Chennai</h3>
                 <p>Tamil Nadu</p>
-                <span>Explore →</span>
             </div>
         </div>
 
-        <div class="location-card">
+        <!-- Bottom Row -->
+        <div class="location-card" onclick="selectLocation('Maharashtra', 'Mumbai')">
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/mumbai.jpg') }}" alt="Mumbai">
             </div>
             <div class="location-info">
                 <h3>Mumbai</h3>
                 <p>Maharashtra</p>
-                <span>Explore →</span>
+            </div>
+        </div>
+
+        <div class="location-card" onclick="selectLocation('Kerala', 'Ernakulam')">
+            <div class="location-placeholder">
+                <img src="{{ url_for('static', filename='images/ernakulam.jpg') }}" alt="Ernakulam">
+            </div>
+            <div class="location-info">
+                <h3>Ernakulam</h3>
+                <p>Kerala</p>
+            </div>
+        </div>
+
+        <div class="location-card" onclick="selectLocation('Andhra Pradesh', 'Visakhapatnam')">
+            <div class="location-placeholder">
+                <img src="{{ url_for('static', filename='images/visakhapatnam.jpg') }}" alt="Visakhapatnam">
+            </div>
+            <div class="location-info">
+                <h3>Visakhapatnam</h3>
+                <p>Andhra Pradesh</p>
             </div>
         </div>
     </div>

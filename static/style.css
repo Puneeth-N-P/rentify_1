@@ -15,9 +15,7 @@ body {
     line-height: 1.6;
 }
 
-
 /* ================= NAVBAR ================= */
-
 .navbar {
     height: 76px;
     width: 100%;
@@ -85,9 +83,7 @@ body {
     transform: translateY(-2px);
 }
 
-
 /* ================= HERO ================= */
-
 .hero {
     min-height: 650px;
     padding: 80px 8%;
@@ -95,11 +91,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 70px;
-    background:
-        radial-gradient(circle at 80% 30%,
-        rgba(112,87,232,0.13),
-        transparent 30%),
-        #fafafa;
+    background: radial-gradient(circle at 80% 30%, rgba(112,87,232,0.13), transparent 30%), #fafafa;
 }
 
 .hero-content {
@@ -158,9 +150,7 @@ body {
     box-shadow: 0 15px 30px rgba(112,87,232,0.25);
 }
 
-
 /* ================= HERO VISUAL ================= */
-
 .hero-visual {
     width: 45%;
     position: relative;
@@ -182,12 +172,7 @@ body {
     height: 240px;
     width: 100%;
     overflow: hidden;
-    background:
-        linear-gradient(
-            135deg,
-            #ded7ff,
-            #f4f1ff
-        );
+    background: linear-gradient(135deg, #ded7ff, #f4f1ff);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,6 +182,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .house-details {
@@ -242,9 +228,7 @@ body {
     color: #666;
 }
 
-
 /* ================= FLOATING CARDS ================= */
-
 .floating-card {
     position: absolute;
     background: white;
@@ -299,9 +283,7 @@ body {
     border-radius: 9px;
 }
 
-
 /* ================= SEARCH ================= */
-
 .search-section {
     padding: 100px 8%;
     background: white;
@@ -332,7 +314,6 @@ body {
     color: #777;
     font-size: 15px;
 }
-
 
 .search-box {
     max-width: 1100px;
@@ -413,9 +394,7 @@ body {
     font-size: 20px;
 }
 
-
 /* ================= FEATURES ================= */
-
 .features-section {
     padding: 100px 8%;
     background: #f7f7f9;
@@ -453,25 +432,10 @@ body {
     margin-bottom: 20px;
 }
 
-.purple {
-    background: #eeeaff;
-    color: #7057e8;
-}
-
-.blue {
-    background: #e6f5ff;
-    color: #2997d8;
-}
-
-.green {
-    background: #e5f9ee;
-    color: #2eae69;
-}
-
-.orange {
-    background: #fff1dd;
-    color: #e99a22;
-}
+.purple { background: #eeeaff; color: #7057e8; }
+.blue { background: #e6f5ff; color: #2997d8; }
+.green { background: #e5f9ee; color: #2eae69; }
+.orange { background: #fff1dd; color: #e99a22; }
 
 .feature-card h3 {
     font-size: 16px;
@@ -484,9 +448,7 @@ body {
     line-height: 1.7;
 }
 
-
-/* ================= LOCATIONS ================= */
-
+/* ================= LOCATIONS (3 Cards Per Line Layout) ================= */
 .locations-section {
     padding: 100px 8%;
     background: white;
@@ -496,8 +458,8 @@ body {
     max-width: 1100px;
     margin: 45px auto 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per line */
+    gap: 25px;
 }
 
 .location-card {
@@ -510,12 +472,12 @@ body {
 }
 
 .location-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
 
 .location-placeholder {
-    height: 150px;
+    height: 180px;
     width: 100%;
     overflow: hidden;
 }
@@ -536,24 +498,16 @@ body {
 }
 
 .location-info h3 {
-    font-size: 16px;
+    font-size: 17px;
 }
 
 .location-info p {
-    font-size: 12px;
+    font-size: 13px;
     color: #888;
-    margin: 3px 0 12px;
+    margin-top: 4px;
 }
-
-.location-info span {
-    color: #7057e8;
-    font-size: 12px;
-    font-weight: 700;
-}
-
 
 /* ================= ABOUT ================= */
-
 .about-section {
     padding: 100px 10%;
     background: #171717;
@@ -638,9 +592,7 @@ body {
     text-align: center;
 }
 
-
 /* ================= FOOTER ================= */
-
 footer {
     background: #101010;
     color: white;
@@ -693,132 +645,7 @@ footer p {
     font-size: 11px;
 }
 
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 1000px) {
-
-    .nav-links {
-        display: none;
-    }
-
-    .hero {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .hero-content {
-        width: 100%;
-    }
-
-    .hero p {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .hero-button {
-        margin: auto;
-    }
-
-    .hero-visual {
-        width: 100%;
-    }
-
-    .feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .location-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .search-box {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .about-section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .about-stats {
-        justify-content: center;
-    }
-}
-
-
-@media (max-width: 600px) {
-
-    .navbar {
-        padding: 0 5%;
-    }
-
-    .nav-button {
-        display: none;
-    }
-
-    .hero {
-        padding: 60px 5%;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-        letter-spacing: -2px;
-    }
-
-    .hero-visual {
-        transform: scale(0.85);
-    }
-
-    .search-section,
-    .features-section,
-    .locations-section {
-        padding: 70px 5%;
-    }
-
-    .search-box {
-        grid-template-columns: 1fr;
-        padding: 20px;
-    }
-
-    .feature-grid,
-    .location-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .section-heading h2 {
-        font-size: 30px;
-    }
-
-    .about-section {
-        padding: 70px 5%;
-    }
-
-    .about-section h2 {
-        font-size: 34px;
-    }
-
-    .about-visual {
-        width: 280px;
-    }
-
-    .about-circle {
-        width: 260px;
-        height: 260px;
-    }
-
-    .main-house-card {
-        width: 330px;
-    }
-
-    .floating-card {
-        display: none;
-    }
-}
-
-
 /* ================= RESULT PAGE ================= */
-
 .prediction-result {
     max-width: 1100px;
     margin: 45px auto 70px;
@@ -920,11 +747,7 @@ footer p {
 
 .property-image {
     height: 190px;
-    background: linear-gradient(
-        135deg,
-        #e9e4ff,
-        #f7f5ff
-    );
+    background: linear-gradient(135deg, #e9e4ff, #f7f5ff);
     position: relative;
     display: flex;
     align-items: center;
@@ -935,10 +758,6 @@ footer p {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.property-home {
-    font-size: 70px;
 }
 
 .match-badge {
@@ -981,7 +800,7 @@ footer p {
 .property-features {
     display: flex;
     gap: 8px;
-    margin: 18px 0;
+    margin-top: 15px;
 }
 
 .property-features span {
@@ -990,24 +809,6 @@ footer p {
     border-radius: 6px;
     font-size: 10px;
     color: #666;
-}
-
-.view-property {
-    width: 100%;
-    height: 42px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-family: inherit;
-    transition: 0.3s;
-}
-
-.view-property:hover {
-    background: #7057e8;
-    color: white;
-    border-color: #7057e8;
 }
 
 .search-again {
@@ -1022,26 +823,41 @@ footer p {
     font-size: 13px;
 }
 
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+    .nav-links { display: none; }
+    .hero { flex-direction: column; text-align: center; }
+    .hero-content { width: 100%; }
+    .hero p { margin-left: auto; margin-right: auto; }
+    .hero-button { margin: auto; }
+    .hero-visual { width: 100%; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .search-box { grid-template-columns: repeat(2, 1fr); }
+    .about-section { flex-direction: column; text-align: center; }
+    .about-stats { justify-content: center; }
+}
 
-@media (max-width: 800px) {
-
-    .prediction-result {
-        flex-direction: column;
-        align-items: flex-start;
+@media (max-width: 768px) {
+    .location-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    .estimated-rent {
-        text-align: left;
-    }
-
-    .property-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .recommended-heading {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 10px;
-    }
-
+@media (max-width: 600px) {
+    .navbar { padding: 0 5%; }
+    .nav-button { display: none; }
+    .hero { padding: 60px 5%; }
+    .hero h1 { font-size: 42px; letter-spacing: -2px; }
+    .hero-visual { transform: scale(0.85); }
+    .search-section, .features-section, .locations-section { padding: 70px 5%; }
+    .search-box { grid-template-columns: 1fr; padding: 20px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .location-grid { grid-template-columns: 1fr; }
+    .section-heading h2 { font-size: 30px; }
+    .about-section { padding: 70px 5%; }
+    .about-section h2 { font-size: 34px; }
+    .about-visual { width: 280px; }
+    .about-circle { width: 260px; height: 260px; }
+    .main-house-card { width: 330px; }
+    .floating-card { display: none; }
 }

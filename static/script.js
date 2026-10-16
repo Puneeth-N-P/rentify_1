@@ -6,11 +6,23 @@ function scrollToSearch() {
     }
 }
 
-function selectLocation(stateName) {
+function selectLocation(stateName, districtName = null) {
     const stateSelect = document.getElementById("state");
+    const districtSelect = document.getElementById("district");
+
     if (stateSelect) {
         stateSelect.value = stateName;
-        stateSelect.dispatchEvent(new Event('change'));
+        stateSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+        if (districtName) {
+            setTimeout(() => {
+                if (districtSelect) {
+                    districtSelect.value = districtName;
+                    districtSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }, 400);
+        }
+
         scrollToSearch();
     }
 }
@@ -88,5 +100,5 @@ if (heroImgElement) {
     setInterval(() => {
         currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
         heroImgElement.src = heroImages[currentHeroIndex];
-    }, 2000); // Changes image every 2 seconds
+    }, 2000);
 }
