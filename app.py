@@ -3,7 +3,7 @@ import random
 
 import joblib
 import pandas as pd
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 
 
 # --------------------------------------------------
@@ -62,15 +62,6 @@ def load_houses():
 # --------------------------------------------------
 
 def recommend_houses(state, district, location, bhk, prediction):
-    """
-    Prioritize:
-    1. Exact state, district, location and BHK.
-    2. Same state and district with the requested BHK.
-    3. Same state with the requested BHK.
-    4. Other properties with the requested BHK.
-    5. Closest available BHK if no properties match.
-    """
-
     df = load_houses()
 
     if df.empty:
@@ -114,13 +105,9 @@ def recommend_houses(state, district, location, bhk, prediction):
         df["location_key"] == location_key, "match_score"
     ] += 100
 
-    # Strongly prefer the requested BHK
     df["bhk_difference"] = (df["bhk"] - bhk).abs()
-
-    # Prefer houses close to the model's predicted rent
     df["rent_difference"] = (df["rent"] - prediction).abs()
 
-    # Filter progressively to avoid an empty result when possible
     candidates = df[df["bhk"] == bhk].copy()
 
     if not candidates.empty:
@@ -148,7 +135,6 @@ def recommend_houses(state, district, location, bhk, prediction):
 
     else:
         closest_bhk = df["bhk_difference"].min()
-
         candidates = df[
             df["bhk_difference"] == closest_bhk
         ].copy()
@@ -160,16 +146,13 @@ def recommend_houses(state, district, location, bhk, prediction):
         if not same_state.empty:
             candidates = same_state.copy()
 
-    # Rank by location match, then predicted rent proximity
     candidates = candidates.sort_values(
         by=["match_score", "rent_difference"],
         ascending=[False, True]
     )
 
-    # Return up to six recommendations
     candidates = candidates.head(6).copy()
 
-    # Remove helper columns before passing records to HTML
     candidates.drop(
         columns=[
             "state_key",
@@ -183,34 +166,55 @@ def recommend_houses(state, district, location, bhk, prediction):
         errors="ignore"
     )
 
-    # Convert pandas values to ordinary Python values for templates
     candidates = candidates.astype(object).where(
         pd.notna(candidates), None
     )
 
     records = candidates.to_dict(orient="records")
 
-    # Assign UNIQUE random house images (house1.jpg through house9.jpg) without duplicates
+    # Assign UNIQUE random location images (l1.jpg through l8.jpg) without repetition
     if records:
-        unique_images = random.sample(range(1, 10), min(len(records), 9))
+        unique_images = random.sample(range(1, 9), min(len(records), 8))
         for i, house in enumerate(records):
-            house["house_image"] = f"house{unique_images[i]}.jpg"
+            house["house_image"] = f"l{unique_images[i]}.jpg"
 
     return records
 
 
 # --------------------------------------------------
-# 4. HOME PAGE
+# 4. API ROUTES FOR DYNAMIC DROPDOWNS
+# --------------------------------------------------
+
+@app.route("/get_districts/<path:state>")
+def get_districts(state):
+    df = load_houses()
+    if df.empty or "state" not in df.columns or "district" not in df.columns:
+        return jsonify([])
+    
+    filtered = df[df["state"].str.strip().str.casefold() == state.strip().casefold()]
+    districts = sorted(filtered["district"].dropna().unique().tolist())
+    return jsonify(districts)
+
+
+@app.route("/get_locations/<path:district>")
+def get_locations(district):
+    df = load_houses()
+    if df.empty or "district" not in df.columns or "location" not in df.columns:
+        return jsonify([])
+    
+    filtered = df[df["district"].str.strip().str.casefold() == district.strip().casefold()]
+    locations = sorted(filtered["location"].dropna().unique().tolist())
+    return jsonify(locations)
+
+
+# --------------------------------------------------
+# 5. PAGE ROUTES
 # --------------------------------------------------
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-
-# --------------------------------------------------
-# 5. PREDICTION PAGE
-# --------------------------------------------------
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -258,10 +262,6 @@ def predict():
             bhk=bhk,
             prediction=prediction
         )
-
-        print(f"Search: {state}, {district}, {location}, {bhk} BHK")
-        print(f"Predicted rent: Rs. {prediction:,.0f}")
-        print(f"Recommendations found: {len(houses)}")
 
         return render_template(
             "result.html",

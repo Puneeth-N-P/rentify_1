@@ -3,70 +3,44 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rentify | Find Your Perfect Home</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/one-piece-logo.jpg') }}">
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
-
 <header class="navbar">
-
     <div class="logo">
-        <img src="{{ url_for('static', filename='images/one-piece-logo.jpg') }}" alt="Rentify Logo" class="logo-image">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rentify Logo" class="logo-image">
         <span>Rent<span>ify</span></span>
     </div>
 
     <nav class="nav-links">
-
         <a href="#home">Home</a>
-
         <a href="#search">Find Houses</a>
-
         <a href="#features">Features</a>
-
         <a href="#locations">Locations</a>
-
         <a href="#about">About</a>
-
     </nav>
 
-    <button class="nav-button"
-            onclick="scrollToSearch()">
-
+    <button class="nav-button" onclick="scrollToSearch()">
         Find a House
-
     </button>
-
 </header>
 
 
 <!-- ================= HERO ================= -->
-
 <section class="hero" id="home">
-
     <div class="hero-content">
-
         <div class="hero-badge">
             <span>✦</span>
             AI-Powered Rent Prediction
@@ -85,27 +59,20 @@
             for you.
         </p>
 
-        <button class="hero-button"
-                onclick="scrollToSearch()">
-
+        <button class="hero-button" onclick="scrollToSearch()">
             Start Searching
             <span>→</span>
-
         </button>
-
     </div>
 
-
     <div class="hero-visual">
-
         <div class="house-card main-house-card">
-
             <div class="house-image">
-                <img src="{{ url_for('static', filename='images/download.jpg') }}" alt="Modern Family Home">
+                <!-- Hero image with ID for auto-slideshow -->
+                <img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="Modern Family Home" id="hero-house-img">
             </div>
 
             <div class="house-details">
-
                 <div>
                     <h3>Modern Family Home</h3>
                     <p>📍 Whitefield, Bangalore</p>
@@ -115,549 +82,243 @@
                     ₹25,000
                     <small>/month</small>
                 </div>
-
             </div>
 
             <div class="house-info">
-
                 <span>🛏 2 BHK</span>
-
-                <span>Wait 2 Bath</span>
-
+                <span>🚿 2 Bath</span>
                 <span>🏠 Apartment</span>
-
             </div>
-
         </div>
 
-
         <div class="floating-card prediction-card">
-
-            <div class="prediction-icon">
-                ✦
-            </div>
-
+            <div class="prediction-icon">✦</div>
             <div>
                 <small>AI Estimated Rent</small>
                 <strong>₹24,500</strong>
             </div>
-
         </div>
 
-
         <div class="floating-card rating-card">
-
             <div class="rating-star">★</div>
-
             <div>
                 <strong>95%</strong>
                 <small>Match</small>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 
 <!-- ================= SEARCH ================= -->
-
-<section class="search-section"
-         id="search">
-
+<section class="search-section" id="search">
     <div class="section-heading">
-
-        <div class="small-title">
-            FIND YOUR HOME
-        </div>
-
-        <h2>
-            What are you looking for?
-        </h2>
-
-        <p>
-            Enter your requirements and let our AI
-            help you find the right rental property.
-        </p>
-
+        <div class="small-title">FIND YOUR HOME</div>
+        <h2>What are you looking for?</h2>
+        <p>Enter your requirements and let our AI help you find the right rental property.</p>
     </div>
 
-
-    <form class="search-box"
-          action="/predict"
-          method="POST">
-
+    <form class="search-box" action="/predict" method="POST">
         <div class="input-group">
-
-            <label>
-                State
-            </label>
-
+            <label>State</label>
             <div class="select-wrapper">
-
                 <span class="input-icon">📍</span>
-
-                <select id="state"
-                        name="state"
-                        required>
-
-                    <option value="">
-                        Select State
-                    </option>
-
-                    <option value="Karnataka">
-                        Karnataka
-                    </option>
-
-                    <option value="Tamil Nadu">
-                        Tamil Nadu
-                    </option>
-
-                    <option value="Maharashtra">
-                        Maharashtra
-                    </option>
-
-                    <option value="Kerala">
-                        Kerala
-                    </option>
-
-                    <option value="Telangana">
-                        Telangana
-                    </option>
-
+                <select id="state" name="state" required>
+                    <option value="">Select State</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Telangana">Telangana</option>
                 </select>
-
             </div>
-
         </div>
 
-
         <div class="input-group">
-
-            <label>
-                District
-            </label>
-
+            <label>District</label>
             <div class="select-wrapper">
-
                 <span class="input-icon">🏙</span>
-
-                <select id="district"
-                        name="district"
-                        required>
-
-                    <option value="">
-                        Select District
-                    </option>
-
+                <select id="district" name="district" required>
+                    <option value="">Select District</option>
                 </select>
-
             </div>
-
         </div>
 
-
         <div class="input-group">
-
-            <label>
-                Location
-            </label>
-
+            <label>Location</label>
             <div class="select-wrapper">
-
                 <span class="input-icon">⌖</span>
-
-                <select id="location"
-                        name="location"
-                        required>
-
-                    <option value="">
-                        Select Location
-                    </option>
-
+                <select id="location" name="location" required>
+                    <option value="">Select Location</option>
                 </select>
-
             </div>
-
         </div>
-
 
         <div class="input-group">
-
-            <label>
-                BHK
-            </label>
-
+            <label>BHK</label>
             <div class="select-wrapper">
-
                 <span class="input-icon">🏠</span>
-
-                <select name="bhk"
-                        required>
-
-                    <option value="">
-                        Select BHK
-                    </option>
-
-                    <option value="1">
-                        1 BHK
-                    </option>
-
-                    <option value="2">
-                        2 BHK
-                    </option>
-
-                    <option value="3">
-                        3 BHK
-                    </option>
-
-                    <option value="4">
-                        4 BHK
-                    </option>
-
-                    <option value="5">
-                        5+ BHK
-                    </option>
-
+                <select name="bhk" required>
+                    <option value="">Select BHK</option>
+                    <option value="1">1 BHK</option>
+                    <option value="2">2 BHK</option>
+                    <option value="3">3 BHK</option>
+                    <option value="4">4 BHK</option>
+                    <option value="5">5+ BHK</option>
                 </select>
-
             </div>
-
         </div>
 
-
-        <button type="submit"
-                class="search-button">
-
+        <button type="submit" class="search-button">
             <span>Find My House</span>
-
             <span class="search-arrow">→</span>
-
         </button>
-
     </form>
-
 </section>
 
 
 <!-- ================= FEATURES ================= -->
-
-<section class="features-section"
-         id="features">
-
+<section class="features-section" id="features">
     <div class="section-heading">
-
-        <div class="small-title">
-            WHY RENTIFY?
-        </div>
-
-        <h2>
-            Smarter way to find your next home
-        </h2>
-
-        <p>
-            We combine machine learning with location-based
-            property matching.
-        </p>
-
+        <div class="small-title">WHY RENTIFY?</div>
+        <h2>Smarter way to find your next home</h2>
+        <p>We combine machine learning with location-based property matching.</p>
     </div>
-
 
     <div class="feature-grid">
-
         <div class="feature-card">
-
-            <div class="feature-icon purple">
-                ✦
-            </div>
-
-            <h3>
-                AI Rent Prediction
-            </h3>
-
-            <p>
-                Our machine learning model estimates the
-                expected monthly rent based on your location
-                and BHK requirements.
-            </p>
-
+            <div class="feature-icon purple">✦</div>
+            <h3>AI Rent Prediction</h3>
+            <p>Our machine learning model estimates the expected monthly rent based on your location and BHK requirements.</p>
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon blue">
-                ⌖
-            </div>
-
-            <h3>
-                Location Based
-            </h3>
-
-            <p>
-                Search houses based on state, district and
-                specific localities.
-            </p>
-
+            <div class="feature-icon blue">⌖</div>
+            <h3>Location Based</h3>
+            <p>Search houses based on state, district and specific localities.</p>
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon green">
-                ✓
-            </div>
-
-            <h3>
-                Smart Matching
-            </h3>
-
-            <p>
-                Get properties that match your requirements
-                instead of searching through hundreds of listings.
-            </p>
-
+            <div class="feature-icon green">✓</div>
+            <h3>Smart Matching</h3>
+            <p>Get properties that match your requirements instead of searching through hundreds of listings.</p>
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon orange">
-                ₹
-            </div>
-
-            <h3>
-                Budget Friendly
-            </h3>
-
-            <p>
-                Compare predicted rent with available properties
-                to make better rental decisions.
-            </p>
-
+            <div class="feature-icon orange">₹</div>
+            <h3>Budget Friendly</h3>
+            <p>Compare predicted rent with available properties to make better rental decisions.</p>
         </div>
-
     </div>
-
 </section>
 
 
 <!-- ================= LOCATIONS ================= -->
-
-<section class="locations-section"
-         id="locations">
-
+<section class="locations-section" id="locations">
     <div class="section-heading">
-
-        <div class="small-title">
-            POPULAR LOCATIONS
-        </div>
-
-        <h2>
-            Explore popular rental areas
-        </h2>
-
+        <div class="small-title">POPULAR LOCATIONS</div>
+        <h2>Explore popular rental areas</h2>
     </div>
 
-
     <div class="location-grid">
-
-        <div class="location-card"
-             onclick="selectLocation('Karnataka')">
-
+        <div class="location-card" onclick="selectLocation('Karnataka')">
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Bangalore">
             </div>
-
             <div class="location-info">
-
                 <h3>Bangalore</h3>
-
-                <p>
-                    Karnataka
-                </p>
-
-                <span>
-                    Explore →
-                </span>
-
+                <p>Karnataka</p>
+                <span>Explore →</span>
             </div>
-
         </div>
 
-
         <div class="location-card">
-
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/mysore.jpg') }}" alt="Mysore">
             </div>
-
             <div class="location-info">
-
                 <h3>Mysore</h3>
-
-                <p>
-                    Karnataka
-                </p>
-
-                <span>
-                    Explore →
-                </span>
-
+                <p>Karnataka</p>
+                <span>Explore →</span>
             </div>
-
         </div>
 
-
         <div class="location-card">
-
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/chennai.jpg') }}" alt="Chennai">
             </div>
-
             <div class="location-info">
-
                 <h3>Chennai</h3>
-
-                <p>
-                    Tamil Nadu
-                </p>
-
-                <span>
-                    Explore →
-                </span>
-
+                <p>Tamil Nadu</p>
+                <span>Explore →</span>
             </div>
-
         </div>
 
-
         <div class="location-card">
-
             <div class="location-placeholder">
                 <img src="{{ url_for('static', filename='images/mumbai.jpg') }}" alt="Mumbai">
             </div>
-
             <div class="location-info">
-
                 <h3>Mumbai</h3>
-
-                <p>
-                    Maharashtra
-                </p>
-
-                <span>
-                    Explore →
-                </span>
-
+                <p>Maharashtra</p>
+                <span>Explore →</span>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 
 <!-- ================= ABOUT ================= -->
-
-<section class="about-section"
-         id="about">
-
+<section class="about-section" id="about">
     <div class="about-content">
-
-        <div class="about-label">
-            ABOUT RENTIFY
-        </div>
-
-        <h2>
-            Finding a home
-            shouldn't be complicated.
-        </h2>
-
-        <p>
-            Rentify is a machine-learning based rental
-            recommendation system designed to help users
-            estimate rental prices and discover suitable
-            houses based on their location and requirements.
-        </p>
+        <div class="about-label">ABOUT RENTIFY</div>
+        <h2>Finding a home shouldn't be complicated.</h2>
+        <p>Rentify is a machine-learning based rental recommendation system designed to help users estimate rental prices and discover suitable houses based on their location and requirements.</p>
 
         <div class="about-stats">
-
             <div>
                 <strong>AI</strong>
                 <span>Powered</span>
             </div>
-
             <div>
                 <strong>24/7</strong>
                 <span>Available</span>
             </div>
-
             <div>
                 <strong>100%</strong>
                 <span>Simple</span>
             </div>
-
         </div>
-
     </div>
-
 
     <div class="about-visual">
-
         <div class="about-circle">
-
-            <img src="{{ url_for('static', filename='images/one-piece-logo.jpg') }}" alt="Rentify Logo" class="about-circle-logo">
-
-            <div class="circle-text">
-                Find • Predict • Recommend
-            </div>
-
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rentify Logo" class="about-circle-logo">
+            <div class="circle-text">Find • Predict • Recommend</div>
         </div>
-
     </div>
-
 </section>
 
 
 <!-- ================= FOOTER ================= -->
-
 <footer>
-
     <div class="footer-logo">
-        <img src="{{ url_for('static', filename='images/one-piece-logo.jpg') }}" alt="Rentify Logo" class="footer-logo-img">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rentify Logo" class="footer-logo-img">
         <span>Rentify</span>
     </div>
-
-    <p>
-        Smart rent prediction and house recommendation.
-    </p>
-
+    <p>Smart rent prediction and house recommendation.</p>
     <div class="footer-links">
-
         <a href="#home">Home</a>
-
         <a href="#search">Find Houses</a>
-
         <a href="#features">Features</a>
-
         <a href="#about">About</a>
-
     </div>
-
     <div class="copyright">
-
         © 2026 Rentify. All rights reserved.
-
     </div>
-
 </footer>
 
-
 <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </body>
 
 </html>

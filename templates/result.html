@@ -7,7 +7,7 @@
     <title>Rent Prediction Results | Rentify</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/one-piece-logo.jpg') }}">
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
 <!-- ================= NAVBAR ================= -->
 <header class="navbar">
     <div class="logo">
-        <img src="{{ url_for('static', filename='images/one-piece-logo.jpg') }}" alt="Rentify Logo" class="logo-image">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rentify Logo" class="logo-image">
         <span>Rent<span>ify</span></span>
     </div>
 
@@ -71,8 +71,8 @@
             {% for house in houses %}
             <div class="property-card">
                 <div class="property-image">
-                    <!-- Renders the randomly assigned house image (house1.jpg through house9.jpg) -->
-                    <img src="{{ url_for('static', filename='images/' + (house.house_image if house.house_image else 'download.jpg')) }}" alt="Property Image">
+                    <!-- Renders unique random location image (l1.jpg through l8.jpg) -->
+                    <img src="{{ url_for('static', filename='images/' + (house.house_image if house.house_image else 'l1.jpg')) }}" alt="Property Image">
                     <div class="match-badge">Match</div>
                 </div>
 
@@ -92,8 +92,6 @@
                         {% endif %}
                         <span>🏠 Apartment</span>
                     </div>
-
-                    <button class="view-property">View Details</button>
                 </div>
             </div>
             {% endfor %}
@@ -113,7 +111,7 @@
 <!-- ================= FOOTER ================= -->
 <footer>
     <div class="footer-logo">
-        <img src="{{ url_for('static', filename='images/one-piece-logo.jpg') }}" alt="Rentify Logo" class="footer-logo-img">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rentify Logo" class="footer-logo-img">
         <span>Rentify</span>
     </div>
 
