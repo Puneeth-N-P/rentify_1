@@ -68,7 +68,7 @@
     <div class="hero-visual">
         <div class="house-card main-house-card">
             <div class="house-image">
-                <!-- Hero image with ID for auto-slideshow -->
+                <!-- Hero image with ID for auto-slideshow (house1.jpg in static/images/) -->
                 <img src="{{ url_for('static', filename='images/house1.jpg') }}" alt="Modern Family Home" id="hero-house-img">
             </div>
 
@@ -125,12 +125,9 @@
                 <span class="input-icon">📍</span>
                 <select id="state" name="state" required>
                     <option value="">Select State</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    {% for st in states %}
+                    <option value="{{ st }}">{{ st }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -165,7 +162,7 @@
                     <option value="2">2 BHK</option>
                     <option value="3">3 BHK</option>
                     <option value="4">4 BHK</option>
-                    <option value="5">5+ BHK</option>
+                    <option value="5+">5+ BHK</option>
                 </select>
             </div>
         </div>
@@ -214,7 +211,7 @@
 </section>
 
 
-<!-- ================= LOCATIONS (2 Rows of 3 Cards) ================= -->
+<!-- ================= LOCATIONS ================= -->
 <section class="locations-section" id="locations">
     <div class="section-heading">
         <div class="small-title">POPULAR LOCATIONS</div>
@@ -222,10 +219,9 @@
     </div>
 
     <div class="location-grid">
-        <!-- Top Row -->
-        <div class="location-card" onclick="selectLocation('Karnataka', 'Bangalore')">
+        <div class="location-card" onclick="selectLocation('Karnataka', 'Bengaluru Urban')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/banglore.jpg') }}" alt="Bangalore">
+                <img src="{{ url_for('static', filename='images/city/banglore.jpg') }}" alt="Bangalore">
             </div>
             <div class="location-info">
                 <h3>Bangalore</h3>
@@ -235,7 +231,7 @@
 
         <div class="location-card" onclick="selectLocation('Telangana', 'Hyderabad')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/hyderabad.jpg') }}" alt="Hyderabad">
+                <img src="{{ url_for('static', filename='images/city/hyderabad.jpg') }}" alt="Hyderabad">
             </div>
             <div class="location-info">
                 <h3>Hyderabad</h3>
@@ -245,7 +241,7 @@
 
         <div class="location-card" onclick="selectLocation('Tamil Nadu', 'Chennai')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/chennai.jpg') }}" alt="Chennai">
+                <img src="{{ url_for('static', filename='images/city/chennai.jpg') }}" alt="Chennai">
             </div>
             <div class="location-info">
                 <h3>Chennai</h3>
@@ -253,10 +249,9 @@
             </div>
         </div>
 
-        <!-- Bottom Row -->
         <div class="location-card" onclick="selectLocation('Maharashtra', 'Mumbai')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/mumbai.jpg') }}" alt="Mumbai">
+                <img src="{{ url_for('static', filename='images/city/mumbai.jpg') }}" alt="Mumbai">
             </div>
             <div class="location-info">
                 <h3>Mumbai</h3>
@@ -266,7 +261,7 @@
 
         <div class="location-card" onclick="selectLocation('Kerala', 'Ernakulam')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/ernakulam.jpg') }}" alt="Ernakulam">
+                <img src="{{ url_for('static', filename='images/city/ernakulam.jpg') }}" alt="Ernakulam">
             </div>
             <div class="location-info">
                 <h3>Ernakulam</h3>
@@ -276,7 +271,7 @@
 
         <div class="location-card" onclick="selectLocation('Andhra Pradesh', 'Visakhapatnam')">
             <div class="location-placeholder">
-                <img src="{{ url_for('static', filename='images/visakhapatnam.jpg') }}" alt="Visakhapatnam">
+                <img src="{{ url_for('static', filename='images/city/visakhapatnam.jpg') }}" alt="Visakhapatnam">
             </div>
             <div class="location-info">
                 <h3>Visakhapatnam</h3>

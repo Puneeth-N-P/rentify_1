@@ -6,13 +6,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rent Prediction Results | Rentify</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modal Styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #ffffff;
+            border-radius: 14px;
+            max-width: 520px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            animation: modalFadeIn 0.2s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header {
+            position: relative;
+        }
+        .modal-header img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .room-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 10px 20px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+        .room-tab {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #e2e8f0;
+            color: #334155;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .room-tab.active {
+            background: #2563eb;
+            color: #fff;
+        }
+        .modal-body {
+            padding: 20px 24px 24px;
+        }
+        .modal-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .modal-title-row h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #111827;
+        }
+        .modal-title-row p {
+            margin: 4px 0 0;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .modal-rent {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #2563eb;
+            white-space: nowrap;
+        }
+        .modal-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .modal-specs span {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #334155;
+        }
+        .modal-owner-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+        .modal-owner-box small {
+            color: #166534;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .modal-owner-box h4 {
+            margin: 0 0 4px;
+            font-size: 1.05rem;
+            color: #14532d;
+        }
+        .modal-owner-box p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #166534;
+            font-weight: 500;
+        }
+        .modal-action-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .modal-action-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,28 +231,59 @@
     <div class="property-grid">
         {% if houses %}
             {% for house in houses %}
+            {% set prop_img = url_for('static', filename='images/' + house.house_image) %}
+            {% set hall_img = url_for('static', filename='images/' + house.image_hall) %}
+            {% set bed1_img = url_for('static', filename='images/' + house.image_bedroom_1) %}
+            {% set bed2_img = url_for('static', filename='images/' + house.image_bedroom_2) %}
+            {% set bed3_img = url_for('static', filename='images/' + house.image_bedroom_3) %}
+            {% set bed4_img = url_for('static', filename='images/' + house.image_bedroom_4) %}
+            {% set bed5_img = url_for('static', filename='images/' + house.image_bedroom_5) %}
+            {% set kit_img = url_for('static', filename='images/' + house.image_kitchen) %}
+            {% set bath_img = url_for('static', filename='images/' + house.image_bathroom) %}
+
+            {% set prop_loc = house.location if house.location else location %}
+            {% set prop_dist = house.district if house.district else district %}
+            {% set prop_state = house.state if house.state else state %}
+            {% set prop_rent = "{:,.0f}".format(house.rent) if house.rent else '{:,}'.format(prediction) %}
+            {% set prop_bhk = house.bhk|int if house.bhk else bhk|int %}
+            {% set prop_bath = house.bathrooms|int if house.bathrooms else 2 %}
+            {% set prop_owner = house.owner_name if house.owner_name else 'Verified Owner' %}
+            {% set prop_contact = house.contact_info if house.contact_info else 'Available on Request' %}
+
             <div class="property-card">
                 <div class="property-image">
-                    <img src="{{ url_for('static', filename='images/' + (house.house_image if house.house_image else 'l1.jpg')) }}" alt="Property Image">
+                    <img src="{{ prop_img }}" alt="Recommended Property">
                     <div class="match-badge">Match</div>
                 </div>
 
                 <div class="property-content">
                     <div class="property-top">
                         <div>
-                            <h3>{{ house.location }}</h3>
-                            <p>📍 {{ house.district }}, {{ house.state }}</p>
+                            <h3>{{ prop_loc }}</h3>
+                            <p>📍 {{ prop_dist }}, {{ prop_state }}</p>
                         </div>
-                        <strong>₹{{ "{:,.0f}".format(house.rent) if house.rent else 'N/A' }}</strong>
+                        <strong>₹{{ prop_rent }}</strong>
                     </div>
 
-                    <div class="property-features">
-                        <span>🛏 {{ house.bhk }} BHK</span>
-                        {% if house.bathrooms %}
-                        <span>🚿 {{ house.bathrooms|int }} Bath</span>
-                        {% endif %}
-                        <span>🏠 Apartment</span>
-                    </div>
+                    <button class="property-btn view-details-btn"
+                        data-hall="{{ hall_img }}"
+                        data-bed1="{{ bed1_img }}"
+                        data-bed2="{{ bed2_img }}"
+                        data-bed3="{{ bed3_img }}"
+                        data-bed4="{{ bed4_img }}"
+                        data-bed5="{{ bed5_img }}"
+                        data-kit="{{ kit_img }}"
+                        data-bath="{{ bath_img }}"
+                        data-location="{{ prop_loc }}"
+                        data-region="{{ prop_dist }}, {{ prop_state }}"
+                        data-rent="₹{{ prop_rent }}"
+                        data-bhk="{{ prop_bhk }}"
+                        data-bathcount="{{ prop_bath }}"
+                        data-owner="{{ prop_owner }}"
+                        data-contact="{{ prop_contact }}"
+                        style="width: 100%; margin-top: 15px; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        View Details
+                    </button>
                 </div>
             </div>
             {% endfor %}
@@ -105,6 +298,45 @@
         <a href="{{ url_for('home') }}#search">← Search Again</a>
     </div>
 </section>
+
+
+<!-- ================= PROPERTY DETAILS MODAL ================= -->
+<div id="propertyModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
+    <div class="modal-box">
+        <div class="modal-header">
+            <img id="modalImage" src="" alt="Room Preview">
+            <button class="modal-close" onclick="closePropertyModal()">&times;</button>
+        </div>
+
+        <div id="roomTabsContainer" class="room-tabs">
+            <!-- Dynamic room tabs will be injected here -->
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-title-row">
+                <div>
+                    <h3 id="modalLocation">Location</h3>
+                    <p id="modalRegion">📍 District, State</p>
+                </div>
+                <div class="modal-rent" id="modalRent">₹0</div>
+            </div>
+
+            <div class="modal-specs">
+                <span id="modalBhk">🛏 2 BHK</span>
+                <span id="modalBath">🚿 2 Bathrooms</span>
+                <span>🏠 Verified Listing</span>
+            </div>
+
+            <div class="modal-owner-box">
+                <small>OWNER DETAILS</small>
+                <h4 id="modalOwner">Owner Name</h4>
+                <p id="modalContact">📞 +91 00000 00000</p>
+            </div>
+
+            <button class="modal-action-btn" onclick="closePropertyModal()">Close Details</button>
+        </div>
+    </div>
+</div>
 
 
 <!-- ================= FOOTER ================= -->
@@ -129,7 +361,98 @@
 </footer>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+    let currentRoomImages = {};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const dataset = this.dataset;
+                openPropertyModal(
+                    dataset.hall,
+                    dataset.bed1,
+                    dataset.bed2,
+                    dataset.bed3,
+                    dataset.bed4,
+                    dataset.bed5,
+                    dataset.kit,
+                    dataset.bath,
+                    dataset.location,
+                    dataset.region,
+                    dataset.rent,
+                    dataset.bhk,
+                    dataset.bathcount,
+                    dataset.owner,
+                    dataset.contact
+                );
+            });
+        });
+    });
+
+    function openPropertyModal(hallImg, bed1Img, bed2Img, bed3Img, bed4Img, bed5Img, kitImg, bathImg, location, region, rent, bhk, bath, owner, contact) {
+        let bhkNum = parseInt(bhk) || 1;
+        if (bhkNum > 5) bhkNum = 5;
+
+        currentRoomImages = {
+            hall: hallImg,
+            kit: kitImg,
+            bath: bathImg
+        };
+
+        if (bhkNum >= 1) currentRoomImages['bed1'] = bed1Img;
+        if (bhkNum >= 2) currentRoomImages['bed2'] = bed2Img;
+        if (bhkNum >= 3) currentRoomImages['bed3'] = bed3Img;
+        if (bhkNum >= 4) currentRoomImages['bed4'] = bed4Img;
+        if (bhkNum >= 5) currentRoomImages['bed5'] = bed5Img;
+
+        // Build dynamic room tabs based on BHK count
+        let tabsHtml = `<button onclick="switchRoomImage('hall')" id="tab-hall" class="room-tab active">Living Room</button>`;
+        for (let i = 1; i <= bhkNum; i++) {
+            let label = bhkNum === 1 ? 'Bedroom' : `Bedroom ${i}`;
+            tabsHtml += `<button onclick="switchRoomImage('bed${i}')" id="tab-bed${i}" class="room-tab">🛏 ${label}</button>`;
+        }
+        tabsHtml += `<button onclick="switchRoomImage('kit')" id="tab-kit" class="room-tab">Kitchen</button>`;
+        tabsHtml += `<button onclick="switchRoomImage('bath')" id="tab-bath" class="room-tab">Restroom</button>`;
+
+        document.getElementById('roomTabsContainer').innerHTML = tabsHtml;
+
+        // Default to Living Room
+        switchRoomImage('hall');
+
+        document.getElementById('modalLocation').textContent = location;
+        document.getElementById('modalRegion').textContent = '📍 ' + region;
+        document.getElementById('modalRent').textContent = rent + '/mo';
+        document.getElementById('modalBhk').textContent = '🛏 ' + bhk + ' BHK';
+        document.getElementById('modalBath').textContent = '🚿 ' + bath + ' Bath';
+        document.getElementById('modalOwner').textContent = owner;
+        document.getElementById('modalContact').textContent = '📞 ' + contact;
+        document.getElementById('propertyModal').classList.add('active');
+    }
+
+    function switchRoomImage(type) {
+        if (currentRoomImages[type]) {
+            document.getElementById('modalImage').src = currentRoomImages[type];
+        }
+
+        document.querySelectorAll('.room-tab').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeBtn = document.getElementById('tab-' + type);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
+    }
+
+    function closePropertyModal() {
+        document.getElementById('propertyModal').classList.remove('active');
+    }
+
+    function closeModalOnOutside(event) {
+        if (event.target.id === 'propertyModal') {
+            closePropertyModal();
+        }
+    }
+</script>
 
 </body>
-
 </html>

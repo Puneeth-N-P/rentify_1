@@ -130,9 +130,42 @@ def recommend_houses(state, district, location, bhk, prediction):
     records = candidates.to_dict(orient="records")
 
     if records:
-        unique_images = random.sample(range(1, 9), min(len(records), 8))
+        num_records = len(records)
+
+        rec_indices = random.sample(range(1, 11), num_records)
+        ba_indices = random.sample(range(1, 11), num_records)
+        ha_indices = random.sample(range(1, 11), num_records)
+        ki_indices = random.sample(range(1, 11), num_records)
+
+        owner_col = "contact_name" if "contact_name" in df.columns else None
+        contact_col = "contact_phone" if "contact_phone" in df.columns else None
+
         for i, house in enumerate(records):
-            house["house_image"] = f"l{unique_images[i]}.jpg"
+            house["house_image"] = f"recommend/l{rec_indices[i]}.jpg"
+            house["image_bathroom"] = f"bathrooms/ba{ba_indices[i]}.jpg"
+            house["image_hall"] = f"living/ha{ha_indices[i]}.jpg"
+            house["image_kitchen"] = f"kitchen/ki{ki_indices[i]}.jpg"
+
+            # Dynamic bedrooms based on property BHK (1 to 5)
+            prop_bhk = int(house.get("bhk", bhk) or bhk)
+            if prop_bhk < 1:
+                prop_bhk = 1
+            if prop_bhk > 5:
+                prop_bhk = 5
+
+            bed_indices = random.sample(range(1, 26), prop_bhk)
+            for b_idx in range(1, 6):
+                if b_idx <= prop_bhk:
+                    house[f"image_bedroom_{b_idx}"] = f"bedrooms/be{bed_indices[b_idx - 1]}.jpg"
+                else:
+                    house[f"image_bedroom_{b_idx}"] = f"bedrooms/be{bed_indices[0]}.jpg"
+
+            # Extract unique owner name & contact directly from CSV columns
+            raw_owner = house.get(owner_col) if owner_col else None
+            raw_contact = house.get(contact_col) if contact_col else None
+
+            house["owner_name"] = str(raw_owner).strip() if raw_owner and pd.notna(raw_owner) and str(raw_owner).strip() not in ["", "nan", "None"] else "Verified Owner"
+            house["contact_info"] = str(raw_contact).strip() if raw_contact and pd.notna(raw_contact) and str(raw_contact).strip() not in ["", "nan", "None"] else "Available on Request"
 
     return records
 
@@ -146,7 +179,7 @@ def get_districts(state):
     df = load_houses()
     if df.empty or "state" not in df.columns or "district" not in df.columns:
         return jsonify([])
-    
+
     filtered = df[df["state"].str.strip().str.casefold() == state.strip().casefold()]
     districts = sorted(filtered["district"].dropna().unique().tolist())
     return jsonify(districts)
@@ -157,7 +190,7 @@ def get_locations(district):
     df = load_houses()
     if df.empty or "district" not in df.columns or "location" not in df.columns:
         return jsonify([])
-    
+
     filtered = df[df["district"].str.strip().str.casefold() == district.strip().casefold()]
     locations = sorted(filtered["location"].dropna().unique().tolist())
     return jsonify(locations)
@@ -169,12 +202,13 @@ def get_locations(district):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    df = load_houses()
+    states = sorted(df["state"].dropna().unique().tolist()) if not df.empty and "state" in df.columns else []
+    return render_template("index.html", states=states)
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
-
     if not MODEL_PATH.exists():
         return "Model file not found. Please run train_model.py first.", 500
 

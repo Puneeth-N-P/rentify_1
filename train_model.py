@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import joblib
@@ -25,6 +24,9 @@ def train_model():
         )
 
     df = pd.read_csv(DATA_PATH)
+    
+    # Strip whitespace from column names just in case
+    df.columns = df.columns.str.strip()
 
     required = [
         "state", "district", "location", "bhk", "rent"
@@ -37,6 +39,11 @@ def train_model():
         )
 
     df = df[required].dropna().copy()
+    
+    # Clean and format columns safely
+    for col in ["state", "district", "location"]:
+        df[col] = df[col].astype(str).str.strip()
+
     df["bhk"] = pd.to_numeric(df["bhk"], errors="coerce")
     df["rent"] = pd.to_numeric(df["rent"], errors="coerce")
     df = df.dropna()
