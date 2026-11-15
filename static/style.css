@@ -1,4 +1,4 @@
-* {
+- {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -448,7 +448,7 @@ body {
     line-height: 1.7;
 }
 
-/* ================= LOCATIONS (3 Cards Per Line Layout) ================= */
+/* ================= LOCATIONS ================= */
 .locations-section {
     padding: 100px 8%;
     background: white;
@@ -458,7 +458,7 @@ body {
     max-width: 1100px;
     margin: 45px auto 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards per line */
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
@@ -823,7 +823,7 @@ footer p {
     font-size: 13px;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= RESPONSIVE MEDIA QUERIES ================= */
 @media (max-width: 1100px) {
     .nav-links { display: none; }
     .hero { flex-direction: column; text-align: center; }
@@ -840,6 +840,64 @@ footer p {
 @media (max-width: 768px) {
     .location-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Result Page Mobile Optimization */
+    .prediction-result {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 20px;
+        margin: 20px 4%;
+    }
+    .estimated-rent {
+        text-align: left;
+    }
+    .estimated-rent strong {
+        font-size: 28px;
+    }
+
+    .property-grid {
+        grid-template-columns: 1fr;
+        padding: 0 4%;
+    }
+    
+    .recommended-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 0 4%;
+    }
+
+    .recommended-heading h2 {
+        font-size: 24px;
+    }
+
+    /* Modal Mobile Adjustments */
+    .modal-box {
+        max-width: 92%;
+        margin: auto;
+        border-radius: 12px;
+    }
+    .modal-header img {
+        height: 200px;
+    }
+    .modal-body {
+        padding: 16px;
+    }
+    .modal-title-row h3 {
+        font-size: 1.1rem;
+    }
+    .modal-rent {
+        font-size: 1.2rem;
+    }
+    .modal-specs {
+        gap: 6px;
+        padding: 10px;
+    }
+    .modal-specs span {
+        font-size: 0.75rem;
+        padding: 4px 8px;
     }
 }
 
